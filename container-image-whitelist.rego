@@ -9,7 +9,7 @@ import data.k8s.matches
 ###############################################################################
 
 deny[{
-	"id": "container-image-whitelist",          # identifies type of violation
+	"id": "{{AzurePolicyID}}",          # identifies type of violation
 	"resource": {
 		"kind": "pods",                 # identifies kind of resource
 		"namespace": namespace,         # identifies namespace of resource
