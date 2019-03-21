@@ -18,10 +18,12 @@ import data.k8s.matches
 deny[{
   "id": "{{AzurePolicyID}}",
   "resource": {"kind": "ingresses", "namespace": namespace, "name": name},
-  "resolution": {"message": "ingress host conflicts with an existing ingress"},
+  "resolution": {"message": msg},
 }] {
   matches[["ingresses", namespace, name, matched_ingress]]
   matches[["ingresses", other_ns, other_name, other_ingress]]
   namespace != other_ns
   other_ingress.spec.rules[_].host == matched_ingress.spec.rules[_].host
+  # To work with azure-dataplane-policy-k8s, msg needs to be in the format of "policyid, kind, name, message"
+  msg := sprintf("%q, %q, %q, ingress host conflicts with an existing ingress", [id, kind, name])
 }
