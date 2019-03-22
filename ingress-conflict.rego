@@ -25,5 +25,5 @@ deny[{
   namespace != other_ns
   other_ingress.spec.rules[_].host == matched_ingress.spec.rules[_].host
   # To work with azure-dataplane-policy-k8s, msg needs to be in the format of "policyid, kind, name, message"
-  msg := sprintf("%q, %q, %q, ingress host conflicts with an existing ingress", [id, kind, name])
+  msg := sprintf("{{AzurePolicyID}}, ingresses, %v, ingress host conflicts with an existing ingress", [name])
 }
