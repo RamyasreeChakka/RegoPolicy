@@ -19,6 +19,7 @@ deny[{
 }] {
 	matches[["pods", namespace, name, matched_pod]]
 	container = matched_pod.spec.containers[_]
+	namespace == "qa"
 	not re_match("{{policyParameters.allowedContainerImagesRegex}}", container.image)
 	# To work with azure-dataplane-policy-k8s, msg needs to be in the format of "policyid, kind, name, message"
 	msg := sprintf("{{AzurePolicyID}}, pods, %v, invalid container registry image %q", [name, container.image])
