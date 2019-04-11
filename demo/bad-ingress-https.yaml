@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-https-bad
+  # annotations:
+  #   kubernetes.io/ingress.allow-http: "false"     # disabling HTTP
+spec:
+  # tls:
+  # - secretName: tls-secret
+  rules:
+  - host: acmecorp.com
+    http:
+      paths:
+      - backend:
+          serviceName: nginx
+          servicePort: 80
+

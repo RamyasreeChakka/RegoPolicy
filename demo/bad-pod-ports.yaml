@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: memory-demo
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    resources:
+      limits:
+        memory: 100Mi
+        cpu: 100Mi
+    ports:
+    - containerPort: 8080 #443
+      name: server
+      protocol: TCP
