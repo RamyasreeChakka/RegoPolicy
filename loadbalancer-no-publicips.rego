@@ -4,7 +4,7 @@
     
     ##############################################################################
     #
-    # Policy : No public IPs on LoadBalancers.
+    # Policy : If service is of type LoadBalancer, then no public IP is allowed.
     # e.g. service only allows ILB
     #
     ##############################################################################
@@ -22,4 +22,8 @@
     loadbalancer_no_pip(service) = true {
         service.spec.type == "LoadBalancer"
         service.metadata.annotations["service.beta.kubernetes.io/azure-load-balancer-internal"] == "true"
+    }
+
+    loadbalancer_whitelisted_ip(service) = true {
+    	service.spec.type != "LoadBalancer"
     }

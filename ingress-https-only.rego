@@ -9,13 +9,13 @@
     ##############################################################################
 
     deny[{
-        "id": "ingress-https",
+        "id": "ingress-https-only",
         "resource": {"kind": "ingresses", "namespace": namespace, "name": name},
         "resolution": {"message": msg},
     }] {
         matches[["ingresses", namespace, name, matched_ingress]]
         not https_complete(matched_ingress)
-        msg := sprintf("ingress should be https. tls configuration and allow_http annotation are required for %v", [matched_ingress.metadata.name])
+        msg := sprintf("ingress should be https. tls configuration and allow-http=false annotation are required for %v", [matched_ingress.metadata.name])
     }
     
     https_complete(ingress) = true {

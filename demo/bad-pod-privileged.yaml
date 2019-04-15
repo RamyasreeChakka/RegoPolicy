@@ -8,5 +8,9 @@ spec:
   containers:
   - name: nginx
     image: nginx
+    resources:
+      limits:
+        memory: 300Mi
+        cpu: 100Mi
     securityContext:
       privileged: true

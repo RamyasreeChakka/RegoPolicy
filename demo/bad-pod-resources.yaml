@@ -12,17 +12,9 @@ spec:
     #     cpu: 1
     command: ["stress"]
     args: ["--vm", "1", "--vm-bytes", "150M", "--vm-hang", "1"]
-    ports:
-    - containerPort: 8080
-      name: server
-      protocol: TCP
   - name: nginx
     image: nginx
     resources:
       limits:
         memory: 100Mi
         cpu: 100Mi
-    ports:
-    - containerPort: 443
-      name: server
-      protocol: TCP
