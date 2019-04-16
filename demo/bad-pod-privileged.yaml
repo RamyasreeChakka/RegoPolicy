@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-privileged
+  labels:
+    app: nginx-privileged
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    resources:
+      limits:
+        memory: 300Mi
+        cpu: 100Mi
+    securityContext:
+      privileged: true
