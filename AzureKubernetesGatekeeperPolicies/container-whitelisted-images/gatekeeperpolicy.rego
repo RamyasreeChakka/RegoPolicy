@@ -18,7 +18,8 @@
         "resolution": {"message": msg},     # provides human-readable message to display
     }] {
         matches[["pods", namespace, name, matched_pod]]
+        namespace != "kube-system"
         container = matched_pod.spec.containers[_]
         not re_match("{{policyParameters.containerAllowedImagesRegex}}", container.image)
-        msg := sprintf("invalid container registry image %q", [container.image])
+        msg := sprintf("The operation was disallowed by policy ‘{{AzurePolicyID}}’. Error details: container image %q has not been whitelisted.", [container.image])
     }
