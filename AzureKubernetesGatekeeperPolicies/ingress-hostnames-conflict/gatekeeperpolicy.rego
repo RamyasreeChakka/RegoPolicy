@@ -16,7 +16,7 @@
             "name": name                  # identifies name of resource
         },
         "resolution": {
-            "message": "ingress host conflicts with an existing ingress"    # provides human-readable message to display
+            "message": "The operation was disallowed by policy ‘{{AzurePolicyID}}’. Error details: ingress host conflicts with an existing ingress."    # provides human-readable message to display
             },
     }] {
         matches[["ingresses", namespace, name, matched_ingress]]
