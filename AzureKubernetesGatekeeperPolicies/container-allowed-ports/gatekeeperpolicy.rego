@@ -17,9 +17,10 @@
         "resolution": {"message": msg},     # provides human-readable message to display
     }] {
         matches[["pods", namespace, name, matched_pod]]
+        namespace != "kube-system"
         container = matched_pod.spec.containers[_]
         port = container.ports[_]
         format_int(port.containerPort, 10, portstr)
         not re_match("{{policyParameters.allowedContainerPortsRegex}}", portstr)
-        msg := sprintf("invalid container port %v for container %v", [portstr, container.name])
+        msg := sprintf("The operation was disallowed by policy ‘{{AzurePolicyID}}’. Error details: container port %v for container %v has not been whitelisted.", [portstr, container.name])
     }

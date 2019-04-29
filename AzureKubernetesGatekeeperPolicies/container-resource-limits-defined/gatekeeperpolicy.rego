@@ -17,9 +17,10 @@
         "resolution": {"message": msg},     # provides human-readable message to display
     }] {
         matches[["pods", namespace, name, matched_pod]]
+        namespace != "kube-system"
         container = matched_pod.spec.containers[_]
         not resources_complete(container.resources)
-        msg := sprintf("CPU and memory resource limits are not defined for container  %q", [container.name])
+        msg := sprintf("The operation was disallowed by policy ‘{{AzurePolicyID}}’. Error details: CPU and memory resource limits are not defined for container %q", [container.name])
     }
     resources_complete(resources) = true {
         not resources == {}

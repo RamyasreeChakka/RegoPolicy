@@ -18,8 +18,9 @@
         "resolution": {"message": msg},       # provides human-readable message to display
     }] {
         matches[["services", namespace, name, matched_service]]
+        namespace != "kube-system"
         not loadbalancer_no_pip(matched_service)
-        msg := sprintf("loadbalancers should not have public ips. azure-load-balancer-internal annotation is required for %v", [matched_service.metadata.name])
+        msg := sprintf("The operation was disallowed by policy ‘{{AzurePolicyID}}’. Error details: loadbalancers should not have public ips. azure-load-balancer-internal annotation is required for %v", [matched_service.metadata.name])
     }
     
     loadbalancer_no_pip(service) = true {

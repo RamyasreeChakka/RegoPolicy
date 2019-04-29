@@ -18,8 +18,9 @@
         "resolution": {"message": msg},    # provides human-readable message to display
     }] {
         matches[["services", namespace, name, matched_service]]
+        namespace != "kube-system"
         port = matched_service.spec.ports[_]
         format_int(port.port, 10, portstr)
         not re_match("{{policyParameters.allowedServicePortsRegex}}", portstr)
-        msg := sprintf("invalid port %v for service %v", [portstr, matched_service.metadata.name])
+        msg := sprintf("The operation was disallowed by policy ‘{{AzurePolicyID}}’. Error details: port %v for service %v has not been whitelisted.", [portstr, matched_service.metadata.name])
     }
