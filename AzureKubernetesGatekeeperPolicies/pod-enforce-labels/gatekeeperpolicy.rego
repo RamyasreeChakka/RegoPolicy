@@ -17,10 +17,11 @@
         "resolution": {"message": msg},     # provides human-readable message to display
     }] {
         matches[["pods", namespace, name, matched_pod]]
+        namespace != "kube-system"
         requiredLabels := "{{policyParameters.commaSeparatedListOfLabels}}"
         delimiter := ","
         split(requiredLabels, delimiter, labels)
         label = labels[_]
         not matched_pod.metadata.labels[label]
-        msg := sprintf("required label %v is missing for pod: %v", [label, matched_pod.metadata.name])
+        msg := sprintf("The operation was disallowed by policy ‘{{AzurePolicyID}}’. Error details: required label %v is missing for pod: %v", [label, matched_pod.metadata.name])
     }

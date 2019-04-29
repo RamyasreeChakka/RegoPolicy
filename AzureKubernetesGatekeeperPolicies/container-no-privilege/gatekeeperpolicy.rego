@@ -18,9 +18,10 @@
         "resolution": {"message": msg},     # provides human-readable message to display
     }] {
         matches[["pods", namespace, name, matched_pod]]
+        namespace != "kube-system"
         container = matched_pod.spec.containers[_]
         not container_no_privilege(container)
-        msg := sprintf("privileged flag set to true is not allowed for container %v", [container.name])
+        msg := sprintf("The operation was disallowed by policy ‘{{AzurePolicyID}}’. Error details: setting privileged flag to true is not allowed for container %v", [container.name])
     }
 
     container_no_privilege(container) = true {

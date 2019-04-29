@@ -18,8 +18,9 @@
         "resolution": {"message": msg},   # provides human-readable message to display
     }] {
         matches[["services", namespace, name, matched_service]]
+        namespace != "kube-system"
         not loadbalancer_whitelisted_sourceip(matched_service)
-        msg := sprintf("invalid load-balancer-source-ranges for service %v", [matched_service.metadata.name])
+        msg := sprintf("The operation was disallowed by policy ‘{{AzurePolicyID}}’. Error details: load-balancer-source-ranges for service %v has not been whitelisted.", [matched_service.metadata.name])
     }
 
     loadbalancer_whitelisted_sourceip(service) = true {

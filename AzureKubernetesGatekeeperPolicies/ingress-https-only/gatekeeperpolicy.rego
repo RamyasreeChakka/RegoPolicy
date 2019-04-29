@@ -18,8 +18,9 @@
         "resolution": {"message": msg},      # provides human-readable message to display
     }] {
         matches[["ingresses", namespace, name, matched_ingress]]
+        namespace != "kube-system"
         not https_complete(matched_ingress)
-        msg := sprintf("ingress should be https. tls configuration and allow-http=false annotation are required for %v", [matched_ingress.metadata.name])
+        msg := sprintf("The operation was disallowed by policy ‘{{AzurePolicyID}}’. Error details: ingress should be https. tls configuration and allow-http=false annotation are required for %v", [matched_ingress.metadata.name])
     }
     
     https_complete(ingress) = true {
