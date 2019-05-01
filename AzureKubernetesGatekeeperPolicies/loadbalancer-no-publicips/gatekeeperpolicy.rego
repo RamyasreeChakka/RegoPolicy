@@ -28,6 +28,6 @@
         service.metadata.annotations["service.beta.kubernetes.io/azure-load-balancer-internal"] == "true"
     }
 
-    loadbalancer_whitelisted_ip(service) = true {
+    loadbalancer_no_pip(service) = true {
     	service.spec.type != "LoadBalancer"
     }
