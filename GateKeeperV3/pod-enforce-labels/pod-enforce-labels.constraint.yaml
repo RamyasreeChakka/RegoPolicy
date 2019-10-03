@@ -1,0 +1,12 @@
+  
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: PodEnforceLabels
+metadata:
+  name: pod-enforce-labels
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+  parameters:
+    commaSeparatedListOfLabels: "{{ .Values.commaSeparatedListOfLabels }}"

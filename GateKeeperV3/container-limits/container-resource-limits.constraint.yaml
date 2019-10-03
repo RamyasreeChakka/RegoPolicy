@@ -1,0 +1,10 @@
+  
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: ContainerResourceLimits
+metadata:
+  name: container-resource-limits
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Container"]

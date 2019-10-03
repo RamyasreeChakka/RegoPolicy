@@ -1,0 +1,12 @@
+  
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: ServiceAllowedPorts
+metadata:
+  name: service-allowed-ports
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Service"]
+  parameters:
+    regex: "{{ .Values.allowedServicePortsRegex }}"

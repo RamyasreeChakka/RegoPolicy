@@ -1,0 +1,11 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: ContainerImageWhitelist
+metadata:
+  name: container-image-whitelist
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Container"]
+  parameters:
+    regex: "{{ .Values.allowedContainerPortsRegex }}"

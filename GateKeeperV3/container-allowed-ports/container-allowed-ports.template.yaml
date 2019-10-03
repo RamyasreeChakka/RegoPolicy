@@ -1,0 +1,27 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: containerallowedports
+spec:
+  crd:
+    spec:
+      names:
+        kind: ContainerAllowedPorts
+      validation:
+        # Schema for the `parameters` field
+        openAPIV3Schema:
+          properties:
+            regex:
+              type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package containerallowedports
+
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          port = container.ports[_]
+          format_int(port.containerPort, 10, portstr)
+          not re_match(input.parameters.regex, portstr)
+          msg := sprintf("Container port %v for container %v has not been whitelisted.", [portstr, container.name])
+        }

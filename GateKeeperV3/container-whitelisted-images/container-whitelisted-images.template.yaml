@@ -1,0 +1,25 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: containerimagewhitelist
+spec:
+  crd:
+    spec:
+      names:
+        kind: ContainerImageWhitelist
+      validation:
+        # Schema for the `parameters` field
+        openAPIV3Schema:
+          properties:
+            regex:
+              type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package containerimagewhitelist
+
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          not re_match(input.parameters.regex, container.image)
+          msg := sprintf("Container image %q has not been whitelisted.", [container.image])
+        }

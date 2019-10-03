@@ -1,0 +1,29 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: podenforcelabels
+spec:
+  crd:
+    spec:
+      names:
+        kind: PodEnforceLabels
+      validation:
+        # Schema for the `parameters` field
+        openAPIV3Schema:
+          properties:
+            commaSeparatedListOfLabels:
+              type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package podenforcelabels
+
+        violation[{"msg": msg, "details": {"missing_labels": missing}}] {
+          delimiter := ","
+          split(input.parameters.commaSeparatedListOfLabels, delimiter, labels)
+          required := {label | label := labels[_]}
+          provided := {label | input.review.object.metadata.labels[label]}
+          missing := required - provided
+          count(missing) > 0
+          msg := sprintf("you must provide labels: %v", [missing])
+        }

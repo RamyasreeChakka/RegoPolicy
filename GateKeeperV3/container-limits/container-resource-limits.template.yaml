@@ -1,0 +1,26 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: containerresourcelimits
+spec:
+  crd:
+    spec:
+      names:
+        kind: ContainerResourceLimits
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package containerresourcelimits
+
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          not resources_complete(container.resources)
+          msg := sprintf("CPU and memory resource limits are not defined for container %q", [container.name])
+        }
+
+        resources_complete(resources) = true {
+          not resources == {}
+          not resources.limits == {}
+          resources.limits["memory"]
+          resources.limits["cpu"]
+        }

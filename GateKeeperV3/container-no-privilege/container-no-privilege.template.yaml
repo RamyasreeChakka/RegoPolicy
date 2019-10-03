@@ -1,0 +1,31 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: containernoprivilege
+spec:
+  crd:
+    spec:
+      names:
+        kind: ContainerNoPrivilege
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package containernoprivilege
+
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          not container_no_privilege(container)
+          msg := sprintf("Setting privileged flag to true is not allowed for container %v", [container.name])
+        }
+
+        container_no_privilege(container) = true {
+            container.securityContext
+            container.securityContext.privileged == false
+        }
+        container_no_privilege(container) = true {
+            not container["securityContext"]
+        }
+        container_no_privilege(container) = true {
+            container.securityContext
+            not container.securityContext["privileged"]
+        }
