@@ -1,7 +1,7 @@
 apiVersion: v1
 appVersion: 1.0
 description: Helm chart for deploying Azure Policy add-on in Kubernetes
-name: azure-policy-kubernetes
+name: aks-engine-azure-policy-addon
 version: 0.1.0
 keywords:
   - azure
