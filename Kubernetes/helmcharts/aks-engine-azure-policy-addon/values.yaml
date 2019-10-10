@@ -6,7 +6,7 @@
 azurepolicy:
   image:
     name: "mcr.microsoft.com/azure-policy/policy-kubernetes-addon-prod"
-    tag: "prod_20191002.1"
+    tag: "prod_20191010.1"
 ## Resource ID for aks-engine is the id of the resource group
   env:
     resourceid: <your_resource_id>
