@@ -1,0 +1,28 @@
+apiVersion: v1
+entries:
+  aks-engine-azure-policy-addon:
+  - apiVersion: v1
+    appVersion: "1"
+    created: "2019-10-14T09:56:09.4190896-07:00"
+    description: Helm chart for deploying Azure Policy add-on in Kubernetes
+    digest: 8782d77a77ef4805e10ef9f0ef8d150002d77bf22db486f0d7eb27e6388f9bf3
+    home: https://docs.microsoft.com/en-us/azure/governance/policy/concepts/rego-for-aks?toc=/azure/aks/toc.json
+    keywords:
+    - azure
+    - azure policy
+    - azure-policy
+    - governance
+    - compliance
+    - aks engine
+    - aks-engine
+    - kubernetes
+    maintainers:
+    - email: emmcmill@microsoft.com
+      name: emmcmill
+    name: aks-engine-azure-policy-addon
+    sources:
+    - https://github.com/Azure/azure-policy-kubernetes
+    urls:
+    - https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/Kubernetes/helmcharts/aks-engine-azure-policy-addon-0.1.0.tgz
+    version: 0.1.0
+generated: "2019-10-14T09:56:09.4111296-07:00"
