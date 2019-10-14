@@ -7,7 +7,9 @@ spec:
     kinds:
       - apiGroups: [""]
         kinds: ["Pod"]
-    namespaces:
-      - "production"
+    namespaceSelector:
+      matchExpressions:
+      - key: control-plane
+        operator: DoesNotExist
   parameters:
     repos: {{ .Values.allowedReposList }}
