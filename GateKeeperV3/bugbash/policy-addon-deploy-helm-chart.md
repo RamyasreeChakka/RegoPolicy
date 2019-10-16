@@ -1,4 +1,4 @@
-# Deploy Azure policy add-on on AKS Engine using helm chart
+# Deploy Azure policy addon on AKS Engine using helm chart
 
 ## Prerequisites
 ### 1. AKS Engine already created.
@@ -60,3 +60,15 @@ NOTE: Currently this step is not part of Azure policy addon helm chart, will inc
 kubectl label namespaces kube-system control-plane=controller-manager
 ```
 NOTE: Currently this step is not part of Azure policy addon helm chart, will include this in the helm chart deployment.
+
+## Uninstall Azure policy addon and Gatekeeper
+
+### 1. Uninstall Gatekeeper
+```bash
+kubectl delete -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper/master/deploy/gatekeeper.yaml
+```
+
+### 2. Uninstall Azure policy addon
+```bash
+helm del --purge azure-policy-addon
+```

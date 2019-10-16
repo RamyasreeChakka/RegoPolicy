@@ -54,7 +54,8 @@ cp _output/<clusterName>/kubeconfig/kubeconfig.<location>.json  ~/.kube/config
 
 Example: cp _output/ramya-perf30-akse-test1/kubeconfig/kubeconfig.westus2.json  ~/.kube/config
 ```
-### 10. Test the kubectl connection to cluster by running below command "kubectl cluster-info"
+
+### 10. Test the kubectl connection to cluster by running below command
 ```bash
 kubectl cluster-info
 
