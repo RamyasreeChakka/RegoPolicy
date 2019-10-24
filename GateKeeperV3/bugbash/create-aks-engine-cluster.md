@@ -40,7 +40,14 @@ Example output:
 	
 ### 7. Copy https://github.com/Azure/aks-engine/blob/master/examples/kubernetes.json to your desktop and upload it to cloud shell.
 
-### 8. Create the cluster using below command.
+### 8. Get aks-engine commands in cloud shell by running below commands.
+```bash
+curl -o get-akse.sh https://raw.githubusercontent.com/Azure/aks-engine/master/scripts/get-akse.sh
+chmod 700 get-akse.sh
+./get-akse.sh
+```
+
+### 9. Create the cluster using below command.
 ```bash
 aks-engine deploy --subscription-id [subscription ID] --dns-prefix [cluster name] --resource-group [resource group name] --location [location] --api-model kubernetes.json --client-id [app ID] --client-secret [password]
 
@@ -48,14 +55,14 @@ Example: aks-engine deploy --subscription-id 44d01367-c909-4ddc-94ef-9c4a4b34ed2
 ```
 NOTE: AKS Engine reference link - https://github.com/Azure/aks-engine/blob/master/docs/tutorials/quickstart.md
 	
-### 9. Connect to cluster using kubectl command by copying the kubeconfig to the kube folder.
+### 10. Connect to cluster using kubectl command by copying the kubeconfig to the kube folder.
 ```bash
 cp _output/<clusterName>/kubeconfig/kubeconfig.<location>.json  ~/.kube/config
 
 Example: cp _output/ramya-perf30-akse-test1/kubeconfig/kubeconfig.westus2.json  ~/.kube/config
 ```
 
-### 10. Test the kubectl connection to cluster by running below command
+### 11. Test the kubectl connection to cluster by running below command
 ```bash
 kubectl cluster-info
 
