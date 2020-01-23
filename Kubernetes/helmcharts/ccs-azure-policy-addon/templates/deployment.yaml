@@ -41,7 +41,7 @@ spec:
         - name: CLIENT_ID
           value: {{ .Values.azurepolicy.env.clientid }}
         - name: RESOURCE_TYPE
-          value: aks engine
+          value: Microsoft.Kubernetes/connectedClusters
         - name: DATAPLANE_ENDPOINT
           value: https://gov-prod-policy-data.trafficmanager.net
         - name: ACS_CREDENTIAL_LOCATION
