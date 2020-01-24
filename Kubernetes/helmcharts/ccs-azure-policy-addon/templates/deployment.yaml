@@ -44,8 +44,6 @@ spec:
           value: Microsoft.Kubernetes/connectedClusters
         - name: DATAPLANE_ENDPOINT
           value: https://gov-prod-policy-data.trafficmanager.net
-        - name: ACS_CREDENTIAL_LOCATION
-          value: /etc/acs/azure.json
         - name: REFRESH_INTERVAL
           value: 5m   # Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h"
         - name: AUDIT_INTERVAL
