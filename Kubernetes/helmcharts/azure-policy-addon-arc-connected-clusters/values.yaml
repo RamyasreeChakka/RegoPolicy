@@ -1,0 +1,27 @@
+# Default values for azure policy for kubernetes
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+## Microsoft Azure Policy Add-on in Kubernetes
+azurepolicy:
+  image:
+    name: "emmcmill/azure-policy-kubernetes"
+    tag: "ccs-test"
+## Resource ID for aks-engine is the id of the resource group
+  env:
+    resourceid: <your_resource_id>
+    clientid: <your_client_id>
+    clientsecret: <your_client_secret>
+
+
+## Configure resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+  resources:
+    deployment:
+      requests:
+        cpu: 30m
+        memory: 50Mi
+      limits:
+        cpu: 100m
+        memory: 200Mi

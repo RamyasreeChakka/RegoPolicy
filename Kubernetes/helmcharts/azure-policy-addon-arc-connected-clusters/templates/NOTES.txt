@@ -1,0 +1,23 @@
+{{- if eq .Values.azurepolicy.env.resourceid "<your_resource_id>" }}
+
+##############################################################################
+####   ERROR: You did not provide Azure Resource ID.       ####
+##############################################################################
+
+{{- end }}
+
+{{- if eq .Values.azurepolicy.env.clientid "<your_client_id>" }}
+
+##############################################################################
+####   ERROR: You did not provide Azure Client ID.       ####
+##############################################################################
+
+{{- end }}
+
+{{- if eq .Values.azurepolicy.env.clientsecret "<your_client_secret>" }}
+
+##############################################################################
+####   ERROR: You did not provide Azure Client Secret.       ####
+##############################################################################
+
+{{- end }}

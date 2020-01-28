@@ -1,0 +1,20 @@
+apiVersion: v1
+appVersion: 1.0
+description: Helm chart for deploying Azure Policy add-on in Azure Arc Kubernetes Connected Clusters
+name: azure-policy-addon-arc-connected-clusters
+version: 0.1.0
+keywords:
+  - azure
+  - azure policy
+  - azure-policy
+  - governance
+  - compliance
+  - arc connected clusters
+  - arc-connected-clusters
+  - kubernetes
+home: https://docs.microsoft.com/en-us/azure/governance/policy/concepts/rego-for-aks?toc=/azure/aks/toc.json
+sources:
+  - https://github.com/Azure/azure-policy-kubernetes
+maintainers:
+  - name: AzureDG
+    email: azuredg@microsoft.com
