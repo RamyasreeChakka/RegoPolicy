@@ -3,7 +3,7 @@ entries:
   aks-engine-azure-policy-addon:
   - apiVersion: v1
     appVersion: "1"
-    created: "2020-01-28T11:49:21.9401825-08:00"
+    created: "2020-01-28T11:55:19.2726488-08:00"
     description: Helm chart for deploying Azure Policy add-on in Kubernetes
     digest: 0246e4e4313013d4acaee0d5b7861a6d2598c439e48fceb5bcfc1007419ebe5b
     home: https://docs.microsoft.com/en-us/azure/governance/policy/concepts/rego-for-aks?toc=/azure/aks/toc.json
@@ -28,7 +28,7 @@ entries:
   azure-connected-clusters-policy-addon:
   - apiVersion: v1
     appVersion: "1"
-    created: "2020-01-28T11:49:21.9451833-08:00"
+    created: "2020-01-28T11:55:19.2726488-08:00"
     description: Helm chart for deploying Azure Policy add-on in Kubernetes
     digest: 34492da07711318f196da9f93ce99642b4dd09cae7511467afd32befeb66a67c
     home: https://docs.microsoft.com/en-us/azure/governance/policy/concepts/rego-for-aks?toc=/azure/aks/toc.json
@@ -53,10 +53,10 @@ entries:
   azure-policy-addon-arc-connected-clusters:
   - apiVersion: v1
     appVersion: "1"
-    created: "2020-01-28T11:49:21.9451833-08:00"
+    created: "2020-01-28T11:55:19.273649-08:00"
     description: Helm chart for deploying Azure Policy add-on in Azure Arc Kubernetes
       Connected Clusters
-    digest: d656bcd773403f7b85f7faf03c7b836e3180320a44324f5ad48c27b078f2152a
+    digest: 409b7c6e3fd5d9efd05fb4cf2702f074db99dce09278d9f35a84ed83654f9be0
     home: https://docs.microsoft.com/en-us/azure/governance/policy/concepts/rego-for-aks?toc=/azure/aks/toc.json
     keywords:
     - azure
@@ -76,4 +76,4 @@ entries:
     urls:
     - https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/Kubernetes/helmcharts/azure-policy-addon-arc-connected-clusters-0.1.0.tgz
     version: 0.1.0
-generated: "2020-01-28T11:49:21.9361832-08:00"
+generated: "2020-01-28T11:55:19.2716576-08:00"
