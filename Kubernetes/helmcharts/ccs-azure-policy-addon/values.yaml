@@ -12,6 +12,7 @@ azurepolicy:
     resourceid: <your_resource_id>
     clientid: <your_client_id>
     clientsecret: <your_client_secret>
+    tenantid: <your_tenant_id>
 
 
 ## Configure resource requests and limits
