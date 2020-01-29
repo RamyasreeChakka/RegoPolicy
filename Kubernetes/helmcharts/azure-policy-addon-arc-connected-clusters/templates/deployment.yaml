@@ -40,6 +40,8 @@ spec:
           value: {{ .Values.azurepolicy.env.resourceid }}
         - name: CLIENT_ID
           value: {{ .Values.azurepolicy.env.clientid }}
+        - name: TENANT_ID
+          value: {{ .Values.azurepolicy.env.tenantid }}
         - name: RESOURCE_TYPE
           value: Microsoft.Kubernetes/connectedClusters
         - name: DATAPLANE_ENDPOINT
