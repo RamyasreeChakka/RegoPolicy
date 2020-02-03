@@ -4,3 +4,10 @@ metadata:
   labels:
     control-plane: controller-manager
   name: kube-system
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    control-plane: controller-manager
+  name: azure-arc
