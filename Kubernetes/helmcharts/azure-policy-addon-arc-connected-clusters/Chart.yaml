@@ -15,8 +15,6 @@ keywords:
   - kubernetes-policy
   - arc connected clusters
   - arc-connected-clusters
-  - acs connected clusters
-  - acs-connected-clusters
   - kubernetes
 home: https://docs.microsoft.com/en-us/azure/governance/policy/concepts/rego-for-aks?toc=/azure/aks/toc.json
 sources:
