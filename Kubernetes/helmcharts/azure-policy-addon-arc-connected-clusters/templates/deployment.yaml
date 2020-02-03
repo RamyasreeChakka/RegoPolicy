@@ -1,4 +1,4 @@
-{{- if (and (ne .Values.azurepolicy.env.resourceid "<your_resource_id>") (and (ne .Values.azurepolicy.env.clientid "<your_client_id>") (ne .Values.azurepolicy.env.clientsecret "<your_client_secret>"))) }}
+{{- if (and (ne .Values.azurepolicy.env.resourceid "<your_resource_id>") (and (ne .Values.azurepolicy.env.tenantid "<your_tenant_id>") (and (ne .Values.azurepolicy.env.clientid "<your_client_id>") (ne .Values.azurepolicy.env.clientsecret "<your_client_secret>")))) }}
 apiVersion: v1
 kind: Secret
 metadata:
@@ -6,7 +6,7 @@ metadata:
   namespace: kube-system
 type: Opaque
 data:
-  client-secret: {{ .Values.azurepolicy.env.clientsecret | b64enc }}
+  client-secret: {{ .Values.azurepolicy.env.clientsecret | b64enc | quote }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -59,4 +59,4 @@ spec:
               key: client-secret
         - name: CURRENT_IMAGE
           value: {{ .Values.azurepolicy.image.name }}:{{ .Values.azurepolicy.image.tag }}
-{{- end }}
+{{- end }} 
