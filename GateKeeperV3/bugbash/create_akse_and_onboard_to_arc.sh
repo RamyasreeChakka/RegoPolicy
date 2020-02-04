@@ -52,7 +52,10 @@ echo "Creating AKS Engine cluster"
 aks-engine deploy --subscription-id $subscriptionId --dns-prefix $resourceGroup --resource-group $resourceGroup --location $region --api-model kubernetes_tls_compliant.json --client-id $clientId --client-secret $clientSecret
 echo "AKS Engine cluster creation completed."
 
-arcClusterName="echo ${resourceGroup}-arc-cluster"
+echo "Setting kube context to point to AKS Engine cluster"
+cp _output/$resourceGroup/kubeconfig/kubeconfig.$region.json  ~/.kube/config
+
+arcClusterName=${resourceGroup}-arc-cluster
 echo "Onboarding AKS Engine cluster to Azure Arc with cluster name: $arcClusterName"
 
 echo "Downloading Arc Azure CLI extensions"
@@ -69,3 +72,4 @@ echo "Azure Arc connected cluster creation completed."
 
 arcClusterResourceId="/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.Kubernetes/connectedClusters/$arcClusterName"
 echo "Azure Arc connected cluster resource id: $arcClusterResourceId"
+echo "Kube config context: $resourceGroup"
