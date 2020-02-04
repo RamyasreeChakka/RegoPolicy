@@ -35,6 +35,9 @@ curl -Lo get-akse.sh https://raw.githubusercontent.com/Azure/aks-engine/master/s
 chmod 700 get-akse.sh
 ./get-akse.sh
 
+echo "Download AKS Engine Azure TLS compliant cluster json"
+curl -LO https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/GateKeeperV3/bugbash/kubernetes_tls_compliant.json
+
 echo "Creating a service principal to use in AKS Engine cluster creation"
 echo "Assigning the service principal contibutor permissions to cluster resource group scope"
 sp="$(az ad sp create-for-rbac --role "Contributor" --scopes "/subscriptions/$subscriptionId/resourceGroups/$resourceGroup")"
@@ -54,7 +57,7 @@ echo "Onboarding AKS Engine cluster to Azure Arc with cluster name: $arcClusterN
 
 echo "Downloading Arc Azure CLI extensions"
 curl -LO https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/GateKeeperV3/bugbash/connectedk8s-0.1.0-py2.py3-none-any.whl
-curl -LO https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/GateKeeperV3/bugbash/connectedk8s-0.1.0-py2.py3-none-any.whl
+curl -LO https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/GateKeeperV3/bugbash/k8sconfiguration-0.1.1-py2.py3-none-any.whl
 
 echo "Adding Arc Azure CLI extensions"
 az extension add --source connectedk8s-0.1.0-py2.py3-none-any.whl --yes
