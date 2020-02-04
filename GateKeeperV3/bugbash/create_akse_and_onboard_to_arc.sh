@@ -55,8 +55,9 @@ echo "AKS Engine cluster creation completed."
 echo "Setting kube context to point to AKS Engine cluster"
 cp _output/$resourceGroup/kubeconfig/kubeconfig.$region.json  ~/.kube/config
 
+arcResourceGroup=${resourceGroup}-arc
 arcClusterName=${resourceGroup}-arc-cluster
-echo "Onboarding AKS Engine cluster to Azure Arc with cluster name: $arcClusterName"
+echo "Onboarding AKS Engine cluster to Azure Arc with cluster name: $arcClusterName and resource group: $arcResourceGroup"
 
 echo "Downloading Arc Azure CLI extensions"
 curl -LO https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/GateKeeperV3/bugbash/connectedk8s-0.1.0-py2.py3-none-any.whl
@@ -67,9 +68,9 @@ az extension add --source connectedk8s-0.1.0-py2.py3-none-any.whl --yes
 az extension add --source k8sconfiguration-0.1.1-py2.py3-none-any.whl --yes
 
 echo "Creating Azure Arc connected cluster with name: $arcClusterName"
-az connectedk8s connect --name $arcClusterName --resource-group $resourceGroup --location eastus
+az connectedk8s connect --name $arcClusterName --resource-group $arcResourceGroup --location eastus
 echo "Azure Arc connected cluster creation completed."
 
-arcClusterResourceId="/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.Kubernetes/connectedClusters/$arcClusterName"
+arcClusterResourceId="/subscriptions/$subscriptionId/resourceGroups/$arcResourceGroup/providers/Microsoft.Kubernetes/connectedClusters/$arcClusterName"
 echo "Azure Arc connected cluster resource id: $arcClusterResourceId"
 echo "Kube config context: $resourceGroup"
