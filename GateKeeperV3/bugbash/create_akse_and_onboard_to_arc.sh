@@ -67,7 +67,7 @@ az extension add --source connectedk8s-0.1.0-py2.py3-none-any.whl --yes
 az extension add --source k8sconfiguration-0.1.1-py2.py3-none-any.whl --yes
 
 echo "Creating Azure Arc connected cluster with name: $arcClusterName"
-az connectedk8s connect --name $arcClusterName --resource-group $resourceGroup
+az connectedk8s connect --name $arcClusterName --resource-group $resourceGroup --location eastus
 echo "Azure Arc connected cluster creation completed."
 
 arcClusterResourceId="/subscriptions/$subscriptionId/resourceGroups/$resourceGroup/providers/Microsoft.Kubernetes/connectedClusters/$arcClusterName"
