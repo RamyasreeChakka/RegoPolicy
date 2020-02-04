@@ -53,8 +53,8 @@ arcClusterName="echo ${resourceGroup}-arc-cluster"
 echo "Onboarding AKS Engine cluster to Azure Arc with cluster name: $arcClusterName"
 
 echo "Downloading Arc Azure CLI extensions"
-curl -Lo https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/GateKeeperV3/bugbash/connectedk8s-0.1.0-py2.py3-none-any.whl
-curl -Lo https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/GateKeeperV3/bugbash/connectedk8s-0.1.0-py2.py3-none-any.whl
+curl -LO https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/GateKeeperV3/bugbash/connectedk8s-0.1.0-py2.py3-none-any.whl
+curl -LO https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/GateKeeperV3/bugbash/connectedk8s-0.1.0-py2.py3-none-any.whl
 
 echo "Adding Arc Azure CLI extensions"
 az extension add --source connectedk8s-0.1.0-py2.py3-none-any.whl --yes
