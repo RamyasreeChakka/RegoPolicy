@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: crd-delete
+  namespace: kube-system
+  annotations:
+    "helm.sh/hook": pre-delete
+    # "helm.sh/hook-delete-policy": "hook-succeeded"
+spec:
+  template:
+    spec:
+      serviceAccountName: azure-policy
+      automountServiceAccountToken: true 
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: pre-delete
+          image: "peterevans/curl-jq" # alpine + curl + jq
+          imagePullPolicy: IfNotPresent
+          command: 
+            - "/bin/sh"
+            - "-ec"
+            - |
+              set -o pipefail
+              TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+              templates=$(curl -s -X GET -k https://kubernetes.default.svc/apis/templates.gatekeeper.sh/v1beta1/constrainttemplates \
+                -H "Authorization: Bearer ${TOKEN}" \
+                -H "Content-Type: application/json" \
+                -H "Accept: application/json")
+              templates=$(echo $templates | jq -r 'select(.items) | .items[].metadata | select(.annotations."constraint-template-installed-by"=="azure-policy-addon") | .name' | awk '{$1=$1};1')
+              for template_name in ${templates}
+              do
+                constraints=$(curl -s -X GET -k https://kubernetes.default.svc/apis/constraints.gatekeeper.sh/v1beta1/${template_name} \
+                  -H "Authorization: Bearer ${TOKEN}" \
+                  -H "Content-Type: application/json" \
+                  -H "Accept: application/json")
+                constraints=$(echo $constraints | jq -r 'select(.items) | .items[].metadata | select(.annotations."constraint-installed-by"=="azure-policy-addon") | .name' | awk '{$1=$1};1')
+                for constraint_name in ${constraints}
+                do
+                  curl -s -X DELETE -k https://kubernetes.default.svc/apis/constraints.gatekeeper.sh/v1beta1/${template_name}/${constraint_name} \
+                    -H "Authorization: Bearer ${TOKEN}" \
+                    -H "Content-Type: application/json" \
+                    -H "Accept: application/json"
+                done
+                curl -s -X DELETE -k https://kubernetes.default.svc/apis/templates.gatekeeper.sh/v1beta1/constrainttemplates/${template_name} \
+                  -H "Authorization: Bearer ${TOKEN}" \
+                  -H "Content-Type: application/json" \
+                  -H "Accept: application/json"
+              done
