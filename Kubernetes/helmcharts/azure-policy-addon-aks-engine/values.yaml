@@ -1,13 +1,13 @@
-# Default values for azure policy for kubernetes
+# Default values for azure policy add-on for AKS Engine, a self managed Kubernetes cluster on Azure.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-## Microsoft Azure Policy Add-on in Kubernetes
+## Microsoft Azure Policy Add-on for AKS Engine
 azurepolicy:
   image:
     name: "mcr.microsoft.com/azure-policy/policy-kubernetes-addon-prod"
     tag: "prod_20191011.1"
-## Resource ID for aks-engine is the id of the resource group
+## Resource ID for aks-engine is the ID of the resource group the AKS Engine cluster is in.
   env:
     resourceid: <your_resource_id>
 
