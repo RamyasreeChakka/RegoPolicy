@@ -3,7 +3,7 @@ kind: K8sAzureContainerAllowedImages
 metadata:
   name: container-allowed-images
 spec:
- excludedNamespaces: {{ .Values.excludedNamespaces }}
+  excludedNamespaces: {{ .Values.excludedNamespaces }}
   match:
     kinds:
       - apiGroups: [""]
