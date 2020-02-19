@@ -320,7 +320,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        image: mcr.microsoft.com/oss/open-policy-agent/gatekeeper:v3.1.0-beta.5
+        image: mcr.microsoft.com/oss/open-policy-agent/gatekeeper:v3.1.0-beta.7
         imagePullPolicy: Always
         livenessProbe:
           httpGet:

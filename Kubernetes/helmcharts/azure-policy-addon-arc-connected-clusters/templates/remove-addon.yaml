@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pre-delete-admin
+  namespace: kube-system
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "20"
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: pre-delete-agent
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "20"
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["delete"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: pre-delete-agent
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "20"
+subjects:
+- kind: ServiceAccount
+  name: pre-delete-admin
+  namespace: kube-system
+roleRef:
+  kind: Role
+  name: pre-delete-agent
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: addon-delete
+  namespace: kube-system
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-delete-policy": "hook-succeeded"
+spec:
+  template:
+    spec:
+      serviceAccountName: pre-delete-admin
+      automountServiceAccountToken: true 
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: pre-delete
+          image: "appropriate/curl" # alpine + curl
+          imagePullPolicy: IfNotPresent
+          command: 
+            - "/bin/sh"
+            - "-ec"
+            - |
+              set -o pipefail
+              TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+              curl -s -X DELETE -k https://kubernetes.default.svc/apis/apps/v1/namespaces/kube-system/deployments/azure-policy \
+                -H "Authorization: Bearer ${TOKEN}" \
+                -H "Content-Type: application/json" \
+                -d '{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground"}' > /dev/null
