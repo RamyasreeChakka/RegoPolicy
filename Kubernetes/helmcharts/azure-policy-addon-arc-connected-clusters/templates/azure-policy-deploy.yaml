@@ -31,27 +31,26 @@ spec:
       - name: azure-policy
         image: {{ .Values.azurepolicy.image.name }}:{{ .Values.azurepolicy.image.tag }}
         resources:
-{{ toYaml .Values.azurepolicy.resources.deployment | indent 9 }}
+          requests:
+            cpu: 30m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 200Mi
         imagePullPolicy: Always
         env:
         - name: K8S_POLICY_PREFIX
           value: azurepolicy
         - name: RESOURCE_ID
           value: {{ .Values.azurepolicy.env.resourceid }}
+        - name: RESOURCE_TYPE
+          value: Microsoft.Kubernetes/connectedClusters
         - name: CLIENT_ID
           value: {{ .Values.azurepolicy.env.clientid }}
         - name: TENANT_ID
           value: {{ .Values.azurepolicy.env.tenantid }}
-        - name: RESOURCE_TYPE
-          value: Microsoft.Kubernetes/connectedClusters
         - name: DATAPLANE_ENDPOINT
           value: https://gov-prod-policy-data.trafficmanager.net
-        - name: REFRESH_INTERVAL
-          value: 5m   # Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h"
-        - name: AUDIT_INTERVAL
-          value: 5m   # Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h"
-        - name: TELEMETRY_HEARTBEAT_INTERVAL
-          value: 5m   # Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h"
         - name: CLIENT_SECRET
           valueFrom:
             secretKeyRef:
@@ -59,4 +58,4 @@ spec:
               key: client-secret
         - name: CURRENT_IMAGE
           value: {{ .Values.azurepolicy.image.name }}:{{ .Values.azurepolicy.image.tag }}
-{{- end }} 
+{{- end }}
