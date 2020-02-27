@@ -10,7 +10,7 @@ metadata:
 spec:
   releaseName: azure-policy-addon-arc-connected-clusters
   chart:
-    repository: https://github.com/RamyasreeChakka/RegoPolicy/tree/master/Kubernetes/helmcharts/
+    repository: https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/Kubernetes/helmcharts/
     name: azure-policy-addon-arc-connected-clusters
     version: 0.1.0
   values:
