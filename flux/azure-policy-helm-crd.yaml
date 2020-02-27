@@ -1,0 +1,20 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: azure-policy-addon-arc-connected-clusters
+  namespace: kube-system
+  annotations:
+    flux.weave.works/automated: "false"
+    flux.weave.works/tag.chart-image: semver:~4.0
+spec:
+  releaseName: azure-policy-addon-arc-connected-clusters
+  chart:
+    repository: https://github.com/RamyasreeChakka/RegoPolicy/tree/master/Kubernetes/helmcharts/
+    name: azure-policy-addon-arc-connected-clusters
+    version: 0.1.0
+  values:
+    azurepolicy.env.resourceid: /subscriptions/44d01367-c909-4ddc-94ef-9c4a4b34ed23/resourceGroups/ramya-perf30-akse-test2-arc/providers/Microsoft.Kubernetes/connectedClusters/ramya-perf30-akse-test2-arc-cluster
+    azurepolicy.env.clientid: 270eef88-5bf6-4a5f-a7ae-9ef90416207a
+    azurepolicy.env.clientsecret: 34f85086-5571-4fdf-97c7-645b9fbe2276
+    azurepolicy.env.tenantid: 72f988bf-86f1-41af-91ab-2d7cd011db47
