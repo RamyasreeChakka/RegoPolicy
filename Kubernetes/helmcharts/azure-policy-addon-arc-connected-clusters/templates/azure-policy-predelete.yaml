@@ -52,7 +52,7 @@ spec:
       terminationGracePeriodSeconds: 0
       containers:
         - name: azure-policy-pre-delete
-          image: "appropriate/curl" # alpine + curl
+          image: {{ .Values.alpinecurl.image.name }}:{{ .Values.alpinecurl.image.tag }}
           env:
             - name: NAMESPACE
               valueFrom:
