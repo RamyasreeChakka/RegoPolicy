@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: pre-delete-admin
+  name: azure-policy-delete-admin
   namespace: kube-system
   annotations:
     "helm.sh/hook": pre-install
@@ -10,7 +10,7 @@ metadata:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: pre-delete-agent
+  name: azure-policy-delete-agent
   annotations:
     "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "20"
@@ -22,17 +22,17 @@ rules:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: pre-delete-agent
+  name: azure-policy-delete-agent
   annotations:
     "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "20"
 subjects:
 - kind: ServiceAccount
-  name: pre-delete-admin
+  name: azure-policy-delete-admin
   namespace: kube-system
 roleRef:
   kind: Role
-  name: pre-delete-agent
+  name: azure-policy-delete-agent
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: batch/v1
@@ -51,7 +51,7 @@ spec:
       restartPolicy: Never
       terminationGracePeriodSeconds: 0
       containers:
-        - name: pre-delete
+        - name: azure-policy-pre-delete
           image: "appropriate/curl" # alpine + curl
           imagePullPolicy: IfNotPresent
           command: 
