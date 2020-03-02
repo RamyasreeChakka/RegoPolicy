@@ -6,7 +6,7 @@
 azurepolicy:
   image:
     name: "mcr.microsoft.com/azure-policy/policy-kubernetes-addon-prod"
-    tag: "prod_20200224.1"
+    tag: "prod_20200227.1"
 ## Replace <your_resource_id> with your Azure Arc for Kubernetes cluster resource Id. For example: /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/testRG/Microsoft.Kubernetes/connectedClusters/testCluster
 ## Replace <your_client_id> with app Id of the service principal created for Azure Policy Add-on to communicate to Azure Policy service.
 ## Replace <your_client_secret> with password of the service principal created for Azure Policy Add-on to communicate to Azure Policy service.
