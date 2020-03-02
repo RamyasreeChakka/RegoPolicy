@@ -46,7 +46,7 @@ metadata:
 spec:
   template:
     spec:
-      serviceAccountName: pre-delete-admin
+      serviceAccountName: azure-policy-delete-admin
       automountServiceAccountToken: true 
       restartPolicy: Never
       terminationGracePeriodSeconds: 0
