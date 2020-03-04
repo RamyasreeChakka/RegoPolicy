@@ -1,13 +1,13 @@
 apiVersion: v1
 entries:
-  azure-policy-addon-arc-connected-clusters:
+  azure-policy-addon-arc-clusters:
   - apiVersion: v1
     appVersion: "1"
-    created: "2020-03-02T15:55:21.4560633-08:00"
+    created: "2020-03-04T12:35:47.7874236-08:00"
     description: Helm chart for deploying Azure Policy Add-on on Azure Arc for Kubernetes
       clusters.
-    digest: c3baff0989366a747b497a4b36629cccb260fe1dfefc52ee403b2e43fb1607b6
-    home: https://docs.microsoft.com/en-us/azure/governance/policy/concepts/rego-for-aks?toc=/azure/aks/toc.json
+    digest: 8c13686f3cea680874af1f020d3231fb0d14331c78c1b9adcc4b1874b15c8d29
+    home: https://aka.ms/kubepolicydoc
     keywords:
     - azure
     - azure policy
@@ -20,16 +20,16 @@ entries:
     - kubernetes-policy
     - arc connected clusters
     - arc-connected-clusters
+    - arc clusters
+    - arc-clusters
     - azure arc for kubernetes clusters
     - azure-arc-for-kubernetes-clusters
     - kubernetes
     maintainers:
     - email: azuredg@microsoft.com
       name: azuredg
-    name: azure-policy-addon-arc-connected-clusters
-    sources:
-    - https://github.com/Azure/azure-policy-kubernetes
+    name: azure-policy-addon-arc-clusters
     urls:
-    - https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/Kubernetes/helmcharts/azure-policy-addon-arc-connected-clusters-0.1.0.tgz
+    - https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/Kubernetes/helmcharts/azure-policy-addon-arc-clusters-0.1.0.tgz
     version: 0.1.0
-generated: "2020-03-02T15:55:21.4550657-08:00"
+generated: "2020-03-04T12:35:47.7824217-08:00"
