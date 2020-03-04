@@ -2,16 +2,16 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: azure-policy-addon-arc-connected-clusters
+  name: azure-policy-addon-arc-clusters
   namespace: kube-system
   annotations:
     flux.weave.works/automated: "false"
     flux.weave.works/tag.chart-image: semver:~4.0
 spec:
-  releaseName: azure-policy-addon-arc-connected-clusters
+  releaseName: azure-policy-addon-arc-clusters
   chart:
     repository: https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/Kubernetes/helmcharts/
-    name: azure-policy-addon-arc-connected-clusters
+    name: azure-policy-addon-arc-clusters
     version: 0.1.0
   values:
     azurepolicy:
