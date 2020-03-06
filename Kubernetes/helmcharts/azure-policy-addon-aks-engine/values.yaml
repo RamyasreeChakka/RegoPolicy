@@ -24,3 +24,9 @@ gatekeeper:
     memoryLimit: 512Mi
     cpuRequests: 100m
     memoryRequests: 256Mi
+
+## Alpine+Curl image for the helm hook to maintain deletion order
+alpinecurl:
+  image:
+    name: "mcr.microsoft.com/azure-policy/alpine-curl"
+    tag: "prod_20200228.1"

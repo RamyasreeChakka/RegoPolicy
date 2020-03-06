@@ -1,12 +1,40 @@
 apiVersion: v1
 entries:
+  azure-policy-addon-aks-engine:
+  - apiVersion: v1
+    appVersion: "1"
+    created: "2020-03-06T12:52:20.2090267-08:00"
+    description: Helm chart for deploying Azure Policy add-on on AKS Engine, a self-managed
+      Kubernetes cluster on Azure
+    digest: 6e9ae7b72c38292b989cec5da7cc8c47f6178f39f64474f9a54b379173a1ef98
+    home: https://aka.ms/kubepolicydoc
+    keywords:
+    - azure
+    - azure policy
+    - azure-policy
+    - governance
+    - compliance
+    - gatekeeper
+    - opa
+    - kubernetes policy
+    - kubernetes-policy
+    - aks engine
+    - aks-engine
+    - kubernetes
+    maintainers:
+    - email: azuredg@microsoft.com
+      name: azuredg
+    name: azure-policy-addon-aks-engine
+    urls:
+    - https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/Kubernetes/helmcharts/azure-policy-addon-aks-engine-0.1.0.tgz
+    version: 0.1.0
   azure-policy-addon-arc-clusters:
   - apiVersion: v1
     appVersion: "1"
-    created: "2020-03-04T12:35:47.7874236-08:00"
+    created: "2020-03-06T12:52:20.2100273-08:00"
     description: Helm chart for deploying Azure Policy Add-on on Azure Arc for Kubernetes
       clusters.
-    digest: 8c13686f3cea680874af1f020d3231fb0d14331c78c1b9adcc4b1874b15c8d29
+    digest: c756221af79da8686e7c1a57aa70b14942205a0e304085d7050a856cf684e640
     home: https://aka.ms/kubepolicydoc
     keywords:
     - azure
@@ -32,4 +60,4 @@ entries:
     urls:
     - https://raw.githubusercontent.com/RamyasreeChakka/RegoPolicy/master/Kubernetes/helmcharts/azure-policy-addon-arc-clusters-0.1.0.tgz
     version: 0.1.0
-generated: "2020-03-04T12:35:47.7824217-08:00"
+generated: "2020-03-06T12:52:20.2080269-08:00"
