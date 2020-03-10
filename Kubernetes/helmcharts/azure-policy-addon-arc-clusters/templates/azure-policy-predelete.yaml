@@ -71,3 +71,4 @@ spec:
                 -H "Authorization: Bearer ${TOKEN}" \
                 -H "Content-Type: application/json" \
                 -d '{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground"}'
+              sleep 30
