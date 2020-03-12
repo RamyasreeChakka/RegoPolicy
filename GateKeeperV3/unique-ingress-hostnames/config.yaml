@@ -1,7 +1,7 @@
 apiVersion: config.gatekeeper.sh/v1alpha1
 kind: Config
 metadata:
-  name: k8sazureingresssyncconfig
+  name: config
   namespace: "kube-system"
 spec:
   sync:
