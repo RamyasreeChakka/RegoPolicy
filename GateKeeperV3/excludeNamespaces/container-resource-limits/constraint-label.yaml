@@ -1,0 +1,15 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sAzureContainerLimits
+metadata:
+  name: container-limits-label
+spec:
+  match:
+    excludedNamespaces: {{ .Values.excludedNamespaces }}
+    labelSelector:
+      matchExpressions: {{ .Values.labelMatchExpressions }}
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+  parameters:
+    cpuLimit : "{{ .Values.cpuLimit }}"
+    memoryLimit: "{{ .Values.memoryLimit }}"
