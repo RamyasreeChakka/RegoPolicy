@@ -1,0 +1,18 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sAzureContainerLimits
+metadata:
+  name: container-limits-static-2
+spec:
+  enforcementAction: dryrun
+  match:
+    excludedNamespaces:
+      - kube-system
+      - gatekeeper-system
+    labelSelector:
+      matchExpressions: [ {"key": "type", "operator": "NotIn", "values": [virtual-kubelet] }]
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+  parameters:
+    cpuLimit : 50m
+    memoryLimit: 50Mi
