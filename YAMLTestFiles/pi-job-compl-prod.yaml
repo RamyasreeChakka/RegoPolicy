@@ -1,0 +1,25 @@
+#
+# This YAML file can be used to test policy "Enforce labels on pods in Kubernetes cluster".
+#
+# Assumption for testing purposes: A pod is compliant if it has labels 'owner' and 'team'
+#
+# This YAML file creates a compliant job in prod namespace
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi-job-compl-prod
+  namespace: prod-ns
+spec:
+  template:
+    metadata:
+      labels:
+        app: pi-job-compl-prod
+        owner: policy
+        team: azuredg
+    spec:
+      containers:
+      - name: pi-job-compl-prod
+        image: perl
+        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      restartPolicy: Never
+  backoffLimit: 4

@@ -1,0 +1,23 @@
+#
+# This YAML file can be used to test policy "Enforce labels on pods in Kubernetes cluster".
+#
+# Assumption for testing purposes: A pod is compliant if it has labels 'owner' and 'team'
+#
+# This YAML file creates a non-compliant pod in test namespace
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-app-non-compl-test
+  namespace: test-ns
+  labels:
+    run: nginx-app-non-compl-test
+spec:
+  containers:
+  - image: nginx
+    name: nginx-app-non-compl-test
+    ports:
+    - containerPort: 8282
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

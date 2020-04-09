@@ -1,0 +1,28 @@
+#
+# This YAML file can be used to test policy "Enforce labels on pods in Kubernetes cluster".
+#
+# Assumption for testing purposes: A pod is compliant if it has labels 'owner' and 'team'
+#
+# This YAML file creates a non-compliant deployment in a namespace that has control-plane label.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy-non-compl-control-plane
+  namespace: gatekeeper-system
+  labels:
+    app: nginx-deploy-non-compl-control-plane
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-deploy-non-compl-control-plane
+  template:
+    metadata:
+      labels:
+        app: nginx-deploy-non-compl-control-plane
+    spec:
+      containers:
+      - name: nginx-deploy-non-compl-control-plane
+        image: nginx
+        ports:
+        - containerPort: 9090

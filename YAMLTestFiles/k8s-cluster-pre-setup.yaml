@@ -1,0 +1,216 @@
+#
+# This YAML file contains the objects that should be installed on a cluster
+# as a pre-setup to test the policy "Enforce labels on pods in Kubernetes cluster".
+# 
+# Assumption for testing purposes: 
+#     1. A pod is compliant if it has labels 'owner' and 'team'
+#     2. Namespace 'test-ns' contains non-compliant objects
+#     3. Namespace 'prod-ns' contains compliant objects
+#     4. Namespace 'exclude-ns' is excluded from policy evaluation
+#
+# Setup a namespace for creating the non-compliant pods that show up in audit results
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test-ns
+---
+# Setup a namespace for creating the compliant pods
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prod-ns
+---
+# Setup a namespace that will be excluded from policy evaluation
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: exclude-ns
+---
+# Create a non-compliant pod in test namespace
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-app-test
+  namespace: test-ns
+  labels:
+    run: nginx-app-test
+spec:
+  containers:
+  - image: nginx
+    name: nginx-app-test
+    ports:
+    - containerPort: 8080
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+---
+# Create a non-compliant pod in exclude namespace
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-app-exclude
+  namespace: exclude-ns
+  labels:
+    run: nginx-app-exclude
+spec:
+  containers:
+  - image: nginx
+    name: nginx-app-exclude
+    ports:
+    - containerPort: 8080
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+---
+# Create a compliant pod in prod namespace
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-app-prod
+  namespace: prod-ns
+  labels:
+    owner: policy
+    team: azuredg
+spec:
+  containers:
+  - image: nginx
+    name: nginx-app-prod
+    ports:
+    - containerPort: 8080
+---
+# Create a non-compliant deployment in test namepsace
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy-test
+  namespace: test-ns
+  labels:
+    app: nginx-deploy-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-deploy-test
+  template:
+    metadata:
+      labels:
+        app: nginx-deploy-test
+    spec:
+      containers:
+      - name: nginx-deploy-test
+        image: nginx
+        ports:
+        - containerPort: 8585
+---
+# Create a non-compliant deployment in exclude namepsace
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy-exclude
+  namespace: exclude-ns
+  labels:
+    app: nginx-deploy-exclude
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-deploy-exclude
+  template:
+    metadata:
+      labels:
+        app: nginx-deploy-exclude
+    spec:
+      containers:
+      - name: nginx-deploy-exclude
+        image: nginx
+        ports:
+        - containerPort: 8585
+---
+# Create a compliant deployment in prod namespace
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy-prod
+  namespace: prod-ns
+  labels:
+    app: nginx-deploy-prod
+    owner: policy
+    team: azuredg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-deploy-prod
+  template:
+    metadata:
+      labels:
+        app: nginx-deploy-prod
+        owner: policy
+        team: azuredg
+    spec:
+      containers:
+      - name: nginx-deploy-prod
+        image: nginx
+        ports:
+        - containerPort: 8585
+---
+# Create a non compliant job in test namespace
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi-job-test
+  namespace: test-ns
+spec:
+  template:
+    metadata:
+      labels:
+        app: pi-job-test
+    spec:
+      containers:
+      - name: pi-job-test
+        image: perl
+        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      restartPolicy: Never
+  backoffLimit: 4
+---
+# Create a non compliant job in exclude namespace
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi-job-exclude
+  namespace: exclude-ns
+spec:
+  template:
+    metadata:
+      labels:
+        app: pi-job-exclude
+    spec:
+      containers:
+      - name: pi-job-exclude
+        image: perl
+        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      restartPolicy: Never
+  backoffLimit: 4
+---
+# Create a compliant job in prod namespace
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi-job-prod
+  namespace: prod-ns
+spec:
+  template:
+    metadata:
+      labels:
+        app: pi-job-prod
+        owner: policy
+        team: azuredg
+    spec:
+      containers:
+      - name: pi-job-prod
+        image: perl
+        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      restartPolicy: Never
+  backoffLimit: 4

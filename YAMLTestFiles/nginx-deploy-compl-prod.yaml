@@ -1,0 +1,32 @@
+#
+# This YAML file can be used to test policy "Enforce labels on pods in Kubernetes cluster".
+#
+# Assumption for testing purposes: A pod is compliant if it has labels 'owner' and 'team'
+#
+# This YAML file creates a compliant deployment in prod namespace.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy-compl-prod
+  namespace: prod-ns
+  labels:
+    app: nginx-deploy-compl-prod
+    owner: policy
+    team: azuredg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-deploy-compl-prod
+  template:
+    metadata:
+      labels:
+        app: nginx-deploy-compl-prod
+        owner: policy
+        team: azuredg
+    spec:
+      containers:
+      - name: nginx-deploy-compl-prod
+        image: nginx
+        ports:
+        - containerPort: 9090

@@ -1,0 +1,28 @@
+#
+# This YAML file can be used to test policy "Enforce labels on pods in Kubernetes cluster".
+#
+# Assumption for testing purposes: A pod is compliant if it has labels 'owner' and 'team'
+#
+# This YAML file creates a non-compliant deployment in exclude namespace
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy-non-compl-exclude
+  namespace: exclude-ns
+  labels:
+    app: nginx-deploy-non-compl-exclude
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-deploy-non-compl-exclude
+  template:
+    metadata:
+      labels:
+        app: nginx-deploy-non-compl-exclude
+    spec:
+      containers:
+      - name: nginx-deploy-non-compl-exclude
+        image: nginx
+        ports:
+        - containerPort: 9090
