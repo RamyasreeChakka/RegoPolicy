@@ -20,4 +20,4 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run script file
-      uses: ./scripts/testScript.sh
+      run: ./scripts/testScript.sh
