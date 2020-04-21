@@ -1,0 +1,23 @@
+name: Helm chart update check for AKS Engine
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'Kubernetes/helmcharts/azure-policy-addon-aks-engine/**'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'Kubernetes/helmcharts/azure-policy-addon-aks-engine/**'
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run script file
+      uses: ./scripts/testScript.sh
