@@ -15,16 +15,6 @@ jobs:
     name: Test Helm chart update
     runs-on: ubuntu-latest
 
-    env:
-      AZURE_CREDENTIALS: ${{ secrets.TEST_AZURE_CREDENTIALS }}
-      SubscriptionId: ""
-      ResourceGroupName: ""
-      ClusterName: ""
-      ClusterResourceId: ""
-      ClusterType: ""
-      ClientId: ""      
-      ClientSecret: ""
-
     steps:
 
     - name: Checkout code
@@ -39,7 +29,8 @@ jobs:
         echo "time is ${currentDateTime}"
         echo "::set-output name=ClusterType::aks-engine-test"
         subId=$(echo "$AZURE_CREDENTIALS" | jq .'subscriptionId' -r)
-        echo "::set-output name=SubscriptionId::$SubId"
+        echo "SubID value is ${subId}"
+        echo "::set-output name=SubscriptionId::${SubId}"
         export ClientId=$(echo "$AZURE_CREDENTIALS" | jq .'clientId' -r)
         export ClientSecret=$(echo "$AZURE_CREDENTIALS" | jq .'clientSecret' -r)
         export ResourceGroupName=$(echo "testRG$currentDateTime")
