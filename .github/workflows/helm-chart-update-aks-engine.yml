@@ -40,6 +40,14 @@ jobs:
         export ClientSecret=$(echo "$AZURE_CREDENTIALS" | jq .'clientSecret' -r)
         export ResourceGroupName=$(echo "testRG$currentDateTime")
         export clusterResourceId=$(echo "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName")
+        echo "Next Sub ID is $SubscriptionId"
+        echo "Next ClusterType is $ClusterTYpe"        
+
+    - shell: bash
+      run: |
+        echo "Test env variables"
+        echo "Next Sub ID is $SubscriptionId"
+        echo "Next ClusterType is $ClusterTYpe"
  
     - name: Logon to Azure
       uses: azure/login@v1
