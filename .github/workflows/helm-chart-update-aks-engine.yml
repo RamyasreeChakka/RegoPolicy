@@ -21,7 +21,7 @@ jobs:
       ResourceGroupName: ""
       ClusterName: ""
       ClusterResourceId: ""
-      ClusterType: "AKS Engine"
+      ClusterType: "aks-engine"
       ClientId: ""      
       ClientSecret: ""
 
@@ -33,9 +33,9 @@ jobs:
     - shell: bash
       run: |
         currentDateTime=`date +"%Y%m%d%H%M%S"`
-        export SubscriptionId=$(echo $AZURE_CREDENTIALS | jq .'subscriptionId' -r)
-        export ClientId=$(echo $AZURE_CREDENTIALS | jq .'clientId' -r)
-        export ClientSecret=$(echo $AZURE_CREDENTIALS | jq .'clientSecret' -r)
+        export SubscriptionId=$(echo "$AZURE_CREDENTIALS" | jq .'subscriptionId' -r)
+        export ClientId=$(echo "$AZURE_CREDENTIALS" | jq .'clientId' -r)
+        export ClientSecret=$(echo "$AZURE_CREDENTIALS" | jq .'clientSecret' -r)
         export ResourceGroupName=$(echo "testRG$currentDateTime")
         export clusterResourceId=$(echo "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName")
  

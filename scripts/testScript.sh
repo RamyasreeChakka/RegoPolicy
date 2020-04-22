@@ -5,6 +5,7 @@
 echo "ClusterType: ${1}"
 echo "Subscription Id: ${2}"
 echo "Resource group name: ${3}"
+echo "Client ID: ${4}"
 
 subscription="44d01367-c909-4ddc-94ef-9c4a4b34ed23"
 az account set -s 44d01367-c909-4ddc-94ef-9c4a4b34ed23
