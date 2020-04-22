@@ -27,21 +27,38 @@ jobs:
       env:
         AZURE_CREDENTIALS: ${{ secrets.TEST_AZURE_CREDENTIALS }}
       run: |
-        chmod +x $GITHUB_WORKSPACE/scripts/jobSettings.sh
-        $GITHUB_WORKSPACE/scripts/jobSettings.sh
+        currentDateTime=`date +"%Y%m%d%H%M%S"`
+        
+        clientId=$(echo "$AZURE_CREDENTIALS" | jq .'clientId' -r)
+        clientSecret=$(echo "$AZURE_CREDENTIALS" | jq .'clientSecret' -r)
+        tenantId=$(echo "$AZURE_CREDENTIALS" | jq .'tenantId' -r)
+        subscriptionId=$(echo "$AZURE_CREDENTIALS" | jq .'subscriptionId' -r)
+        resourceGroupName=$(echo "testRG${currentDateTime}")
+        
+        if [ $ClusterType == "aks-engine" ]
+        then
+           clusterName=$(echo "${resourceGroupName}")
+        else
+           clusterName=$(echo "testCluster${currentDateTime}")
+        fi
+
+        echo "::set-output name=ClientId::${clientId}"
+        echo "::set-output name=ClientSecret::add-mask::${clientSecret}"
+        echo "::set-output name=TenantId::${tenantId}"
+        echo "::set-output name=SubscriptionId::${subscriptionId}"
+        echo "::set-output name=ResourceGroupName::${resourceGroupName}"
+        echo "::set-output name=ClusterName::${clusterName}"
 
     - shell: bash
       env:
-        ClientId: ${{ steps.settings.outputs.ClientId }}
         TenantId: ${{ steps.settings.outputs.TenantId }}
         SubscriptionId: ${{ steps.settings.outputs.SubscriptionId }}
         ClusterName: ${{ steps.settings.outputs.ClusterName }}
 
       run: |
         echo "Test env variables"
-        echo "Sub ID is $SubscriptionId"
-        echo "ClusterType is $ClusterType"
-        echo "Client Id is $ClientId"
+        echo "Next Sub ID is $SubscriptionId"
+        echo "Next ClusterType is $ClusterType"
  
     - name: Logon to Azure
       uses: azure/login@v1
@@ -50,12 +67,6 @@ jobs:
 
     - name: Create AKS Engine cluster
       uses: azure/CLI@v1
-      env:
-        ClientId: ${{ steps.settings.outputs.ClientId }}
-        TenantId: ${{ steps.settings.outputs.TenantId }}
-        SubscriptionId: ${{ steps.settings.outputs.SubscriptionId }}
-        ResourceGroupName: ${{ steps.settings.outputs.ResourceGroupName }}
-        ClusterName: ${{ steps.settings.outputs.ClusterName }}      
       with: 
         inlineScript: |
           chmod +x $GITHUB_WORKSPACE/scripts/testScript.sh
