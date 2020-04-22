@@ -18,6 +18,15 @@ jobs:
 
     - name: Checkout code
       uses: actions/checkout@v2
+ 
+    - name: Logon to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Run script file
-      run: ./scripts/testScript.sh
+    - name: Create AKS Engine cluster
+      uses: azure/CLI@v1
+      with: 
+        inlineScript: |
+          chmod +x $GITHUB_WORKSPACE/scripts/testScript.sh
+          $GITHUB_WORKSPACE/scripts/testScript.sh
