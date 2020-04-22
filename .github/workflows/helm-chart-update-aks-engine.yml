@@ -29,4 +29,5 @@ jobs:
       with: 
         inlineScript: |
           chmod +x $GITHUB_WORKSPACE/scripts/testScript.sh
-          $GITHUB_WORKSPACE/scripts/testScript.sh
+          $GITHUB_WORKSPACE/scripts/testScript.sh 
+      

@@ -17,7 +17,7 @@ chmod 700 get-akse.sh
 ./get-akse.sh
 
 echo "Create AKS Engine cluster"
-aks-engine version
+aks-engine ver
 if [ $? -eq 0 ]
 then
   echo "Successfully created AKS Engine cluster"
