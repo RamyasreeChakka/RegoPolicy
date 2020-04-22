@@ -30,13 +30,11 @@ jobs:
         echo "::set-output name=ClusterType::aks-engine-test"
         subId=$(echo "$AZURE_CREDENTIALS" | jq .'subscriptionId' -r)
         echo "SubID value is ${subId}"
-        echo "::set-output name=SubscriptionId::${SubId}"
-        export ClientId=$(echo "$AZURE_CREDENTIALS" | jq .'clientId' -r)
-        export ClientSecret=$(echo "$AZURE_CREDENTIALS" | jq .'clientSecret' -r)
-        export ResourceGroupName=$(echo "testRG$currentDateTime")
-        export clusterResourceId=$(echo "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName")
-        echo "Sub ID is $SubscriptionId"
-        echo "ClusterType is $ClusterTYpe"        
+        echo "::set-output name=SubscriptionId::${subId}"
+        clientId=$(echo "$AZURE_CREDENTIALS" | jq .'clientId' -r)
+        clientSecret=$(echo "$AZURE_CREDENTIALS" | jq .'clientSecret' -r)
+        resourceGroupName=$(echo "testRG${currentDateTime}")
+        clusterResourceId=$(echo "/subscriptions/${subId/resourceGroups/${resourceGroupName}")
 
     - shell: bash
       env:
@@ -45,7 +43,7 @@ jobs:
       run: |
         echo "Test env variables"
         echo "Next Sub ID is $SubscriptionId"
-        echo "Next ClusterType is $ClusterTYpe"
+        echo "Next ClusterType is $ClusterType"
  
     - name: Logon to Azure
       uses: azure/login@v1
