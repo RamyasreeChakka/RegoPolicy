@@ -11,6 +11,16 @@ on:
     paths:
       - 'Kubernetes/helmcharts/azure-policy-addon-aks-engine/**'
 jobs:
+  env:
+    AZURE_CREDENTIALS: ${{ secrets.TEST_AZURE_CREDENTIALS }}   
+    SubscriptionId: ""
+    ResourceGroupName: ""
+    ClusterName: ""
+    ClusterResourceId: ""
+    ClusterType: "AKS Engine"
+    ClientId: ""
+    ClientSecret: ""
+
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -18,16 +28,25 @@ jobs:
 
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - shell: bash
+      run: |
+        currentDateTime=`date +"%Y%m%d%H%M%S"`
+        export SubscriptionId=$(echo $AZURE_CREDENTIALS | jq .'subscriptionId' -r)
+        export ClientId=$(echo $AZURE_CREDENTIALS | jq .'clientId' -r)
+        export ClientSecret=$(echo $AZURE_CREDENTIALS | jq .'clientSecret' -r)
+        export ResourceGroupName=$(echo "testRG$currentDateTime")
+        export clusterResourceId=$(echo "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName")
  
     - name: Logon to Azure
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        creds: ${{ secrets.TEST_AZURE_CREDENTIALS }}
 
     - name: Create AKS Engine cluster
       uses: azure/CLI@v1
       with: 
         inlineScript: |
           chmod +x $GITHUB_WORKSPACE/scripts/testScript.sh
-          $GITHUB_WORKSPACE/scripts/testScript.sh 
+          $GITHUB_WORKSPACE/scripts/testScript.sh $ClusterType $SubscriptionId $ResourceGroupName $ClientId $ClientSecret
       
