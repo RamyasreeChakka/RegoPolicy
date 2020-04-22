@@ -22,12 +22,7 @@ spec:
       - name: azure-policy
         image: {{ .Values.azurepolicy.image.name }}:{{ .Values.azurepolicy.image.tag }}
         resources:
-          requests:
-            cpu: 30m
-            memory: 50Mi
-          limits:
-            cpu: 100m
-            memory: 200Mi
+{{ toYaml .Values.azurepolicy.resources.deployment | indent 9 }}
         imagePullPolicy: Always
         env:
         - name: K8S_POLICY_PREFIX
@@ -40,14 +35,12 @@ spec:
           value: https://gov-prod-policy-data.trafficmanager.net
         - name: ACS_CREDENTIAL_LOCATION
           value: /etc/acs/azure.json
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: POD_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
+        - name: REFRESH_INTERVAL
+          value: 5m   # Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h"
+        - name: AUDIT_INTERVAL
+          value: 5m   # Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h"
+        - name: TELEMETRY_HEARTBEAT_INTERVAL
+          value: 5m   # Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h"
         - name: CURRENT_IMAGE
           value: {{ .Values.azurepolicy.image.name }}:{{ .Values.azurepolicy.image.tag }}
         volumeMounts:
@@ -58,4 +51,4 @@ spec:
           path: /etc/kubernetes/azure.json
           type: File
         name: acs-credential
-{{- end }}
+{{- end }} 
