@@ -34,14 +34,15 @@ jobs:
       run: |
         currentDateTime=`date +"%Y%m%d%H%M%S"`
         echo "time is ${currentDateTime}"
-        echo set-env ClusterType="aks-engine-test"
-        echo ::set-env SubscriptionId=$(echo "$AZURE_CREDENTIALS" | jq .'subscriptionId' -r)
+        echo "::set-env name=ClusterType::aks-engine-test"
+        subId=$(echo "$AZURE_CREDENTIALS" | jq .'subscriptionId' -r)
+        echo "::set-env name=SubscriptionId::$SubId"
         export ClientId=$(echo "$AZURE_CREDENTIALS" | jq .'clientId' -r)
         export ClientSecret=$(echo "$AZURE_CREDENTIALS" | jq .'clientSecret' -r)
         export ResourceGroupName=$(echo "testRG$currentDateTime")
         export clusterResourceId=$(echo "/subscriptions/$SubscriptionId/resourceGroups/$ResourceGroupName")
-        echo "Next Sub ID is $SubscriptionId"
-        echo "Next ClusterType is $ClusterTYpe"        
+        echo "Sub ID is $SubscriptionId"
+        echo "ClusterType is $ClusterTYpe"        
 
     - shell: bash
       run: |
