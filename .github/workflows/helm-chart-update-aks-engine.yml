@@ -11,19 +11,20 @@ on:
     paths:
       - 'Kubernetes/helmcharts/azure-policy-addon-aks-engine/**'
 jobs:
-  env:
-    AZURE_CREDENTIALS: ${{ secrets.TEST_AZURE_CREDENTIALS }}   
-    SubscriptionId: ""
-    ResourceGroupName: ""
-    ClusterName: ""
-    ClusterResourceId: ""
-    ClusterType: "AKS Engine"
-    ClientId: ""
-    ClientSecret: ""
-
-  build:
-    name: Build
+  test:
+    name: Test Helm chart update
     runs-on: ubuntu-latest
+
+    env:
+      AZURE_CREDENTIALS: ${{ secrets.TEST_AZURE_CREDENTIALS }}
+      SubscriptionId: ""
+      ResourceGroupName: ""
+      ClusterName: ""
+      ClusterResourceId: ""
+      ClusterType: "AKS Engine"
+      ClientId: ""      
+      ClientSecret: ""
+
     steps:
 
     - name: Checkout code
