@@ -15,14 +15,14 @@ jobs:
     name: Test Helm chart update
     runs-on: ubuntu-latest
     env:
-      ClusterType: "aks-engine"
+      ClusterType: "aks-engine"    
 
     steps:
-
     - name: Checkout code
       uses: actions/checkout@v2
 
     - id: settings
+      name: Initialize settings to be used across steps
       shell: bash
       env:
         AZURE_CREDENTIALS: ${{ secrets.TEST_AZURE_CREDENTIALS }}
@@ -30,34 +30,22 @@ jobs:
         chmod +x $GITHUB_WORKSPACE/scripts/jobSettings.sh
         $GITHUB_WORKSPACE/scripts/jobSettings.sh
 
-    - shell: bash
-      env:
-        ClientId: ${{ steps.settings.outputs.ClientId }}
-        TenantId: ${{ steps.settings.outputs.TenantId }}
-        SubscriptionId: ${{ steps.settings.outputs.SubscriptionId }}
-        ClusterName: ${{ steps.settings.outputs.ClusterName }}
-
-      run: |
-        echo "Test env variables"
-        echo "Sub ID is $SubscriptionId"
-        echo "ClusterType is $ClusterType"
-        echo "Client Id is $ClientId"
- 
     - name: Logon to Azure
       uses: azure/login@v1
       with:
         creds: ${{ secrets.TEST_AZURE_CREDENTIALS }}
 
-    - name: Create AKS Engine cluster
+    - name: Create Kubernetes cluster
       uses: azure/CLI@v1
       env:
         ClientId: ${{ steps.settings.outputs.ClientId }}
+        ClientSecret: ${{ steps.settings.outputs.ClientSecret }}
         TenantId: ${{ steps.settings.outputs.TenantId }}
         SubscriptionId: ${{ steps.settings.outputs.SubscriptionId }}
         ResourceGroupName: ${{ steps.settings.outputs.ResourceGroupName }}
         ClusterName: ${{ steps.settings.outputs.ClusterName }}      
       with: 
         inlineScript: |
-          chmod +x $GITHUB_WORKSPACE/scripts/testScript.sh
-          $GITHUB_WORKSPACE/scripts/testScript.sh $ClusterType $SubscriptionId $ResourceGroupName $ClientId $ClientSecret
+          chmod +x $GITHUB_WORKSPACE/scripts/createCluster.sh
+          $GITHUB_WORKSPACE/scripts/createCluster.sh $ClusterType $SubscriptionId $ResourceGroupName $ClusterName $ClientId $ClientSecret
       
