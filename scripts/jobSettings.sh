@@ -24,6 +24,6 @@ fi
 echo "::set-output name=ClientId::${clientId}"
 echo "::set-output name=ClientSecret::add-mask::${clientSecret}"
 echo "::set-output name=TenantId::${tenantId}"
-echo "::set-output name=SubscriptionId::${subscriptionId}"
+echo "::set-env name=SubscriptionId::${subscriptionId}"
 echo "::set-output name=ResourceGroupName::${resourceGroupName}"
 echo "::set-output name=ClusterName::${clusterName}"

@@ -41,7 +41,6 @@ jobs:
         ClientId: ${{ steps.settings.outputs.ClientId }}
         ClientSecret: ${{ steps.settings.outputs.ClientSecret }}
         TenantId: ${{ steps.settings.outputs.TenantId }}
-        SubscriptionId: ${{ steps.settings.outputs.SubscriptionId }}
         ResourceGroupName: ${{ steps.settings.outputs.ResourceGroupName }}
         ClusterName: ${{ steps.settings.outputs.ClusterName }}      
       with: 
