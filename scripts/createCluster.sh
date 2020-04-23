@@ -5,17 +5,16 @@
 #
 # This script creates a Kubernetes cluster and will be executed as one of the steps in GitHub workflow.
 # This script should be run with below command line arguments:
-#   1. Cluster type
+#   1. Cluster type (aks or aks-engine or arc)
 #   2. Subscription ID
 #   3. Resource group name
 #   4. Cluster name
 #   5. Client ID
 #   6. Client Secret
 #
-# To execute this script outside of workflow:
-#   - Create new environment variable $GITHUB_WORKSPACE and set its value to root of the GitHub project.
-#   - Use aks or aks-engine or arc for ClusterType input.
-#   - Client ID should have at least contributor permissions on the subscription to create the cluster.
+# NOTE: This script can also be run outside of workflow to create a Kubernetes cluster.
+#   - Script should be executed from root of the GitHub project
+#   - For example: ./scripts/createCluster.sh aks-engine aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa testRG testCluster bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb cccccccc-cccc-cccc-cccc-cccccccccccc
 #
 
 if [ $# -ne 6 ]

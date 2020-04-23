@@ -35,9 +35,17 @@ jobs:
       with:
         creds: ${{ secrets.TEST_AZURE_CREDENTIALS }}
 
-    - name: Create Kubernetes cluster
+    - id: createCluster
+      name: Create Kubernetes cluster
       uses: azure/CLI@v1
       with: 
         inlineScript: |
           chmod +x $GITHUB_WORKSPACE/scripts/createCluster.sh
           $GITHUB_WORKSPACE/scripts/createCluster.sh $ClusterType $SubscriptionId $ResourceGroupName $ClusterName $ClientId $ClientSecret
+
+    - name: Verify kubeconfig
+      shell: bash
+      env:
+        KubeConfig: ${{ steps.createCluster.outputs.KubeConfig }}
+      run: |
+        echo "Verifying kube config: $KubeConfig"

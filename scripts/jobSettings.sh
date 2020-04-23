@@ -23,6 +23,7 @@ fi
 
 echo "::set-env name=ClientId::${clientId}"
 echo "::set-env name=ClientSecret::${clientSecret}"
+echo "::add-mask::${clientSecret}"
 echo "::set-env name=TenantId::${tenantId}"
 echo "::set-env name=SubscriptionId::${subscriptionId}"
 echo "::set-env name=ResourceGroupName::${resourceGroupName}"
