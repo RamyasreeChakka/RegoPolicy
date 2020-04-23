@@ -21,9 +21,9 @@ else
   clusterName=$(echo "testCluster${currentDateTime}")
 fi
 
-echo "::set-output name=ClientId::${clientId}"
-echo "::set-output name=ClientSecret::add-mask::${clientSecret}"
-echo "::set-output name=TenantId::${tenantId}"
+echo "::set-env name=ClientId::${clientId}"
+echo "::set-env name=ClientSecret::${clientSecret}"
+echo "::set-env name=TenantId::${tenantId}"
 echo "::set-env name=SubscriptionId::${subscriptionId}"
-echo "::set-output name=ResourceGroupName::${resourceGroupName}"
-echo "::set-output name=ClusterName::${clusterName}"
+echo "::set-env name=ResourceGroupName::${resourceGroupName}"
+echo "::set-env name=ClusterName::${clusterName}"

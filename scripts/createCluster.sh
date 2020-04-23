@@ -48,7 +48,7 @@ then
   ./get-akse.sh
   
   echo "Creating AKS Engine cluster"
-  aks-engine deploy --subscription-id $subscriptionId --dns-prefix $resourceGroupName --resource-group $resourceGroupName --location $location --api-model $GITHUB_WORKSPACE/scripts/kubernetes_tls_compliant.json --client-id $clientId --client-secret $clientSecret
+  aks-engine deploy --subscription-id $subscriptionId --dns-prefix $resourceGroupName --resource-group $resourceGroupName --location $location --api-model ./scripts/kubernetes_tls_compliant.json --client-id $clientId --client-secret $clientSecret
 
   if [ $? -ne 0 ]
   then

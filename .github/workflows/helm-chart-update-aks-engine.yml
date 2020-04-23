@@ -22,7 +22,7 @@ jobs:
       uses: actions/checkout@v2
 
     - id: settings
-      name: Initialize settings to be used across steps
+      name: Initialize environment settings
       shell: bash
       env:
         AZURE_CREDENTIALS: ${{ secrets.TEST_AZURE_CREDENTIALS }}
@@ -37,14 +37,7 @@ jobs:
 
     - name: Create Kubernetes cluster
       uses: azure/CLI@v1
-      env:
-        ClientId: ${{ steps.settings.outputs.ClientId }}
-        ClientSecret: ${{ steps.settings.outputs.ClientSecret }}
-        TenantId: ${{ steps.settings.outputs.TenantId }}
-        ResourceGroupName: ${{ steps.settings.outputs.ResourceGroupName }}
-        ClusterName: ${{ steps.settings.outputs.ClusterName }}      
       with: 
         inlineScript: |
           chmod +x $GITHUB_WORKSPACE/scripts/createCluster.sh
           $GITHUB_WORKSPACE/scripts/createCluster.sh $ClusterType $SubscriptionId $ResourceGroupName $ClusterName $ClientId $ClientSecret
-      
