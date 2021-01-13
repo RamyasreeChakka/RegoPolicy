@@ -1,0 +1,11 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sTestContainerAllowedImages
+metadata:
+  name: container-allowed-images
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+  parameters:
+    imageRegex: {{ .Values.allowedContainerImagesRegex }}
