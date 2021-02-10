@@ -1,0 +1,2 @@
+mcr.microsoft.com/azure-policy/policy-kubernetes-addon-prod:prod_20201015.1
+mcr.microsoft.com/azure-policy/policy-kubernetes-webhook:prod_20200505.3
