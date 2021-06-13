@@ -20,14 +20,14 @@ spec:
       description: Config is the Schema for the configs API
       properties:
         apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          description: 'APIVersion defines the versioned schema of this representation of an object. Servers
+            should convert recognized schemas to the latest internal value, and may reject unrecognized
+            values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
           type: string
         kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          description: 'Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to. Cannot be updated.
+            In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
           type: string
         metadata:
           type: object
@@ -38,8 +38,7 @@ spec:
               description: Configuration for syncing k8s objects
               properties:
                 syncOnly:
-                  description: If non-empty, only entries on this list will be replicated
-                    into OPA
+                  description: If non-empty, only entries on this list will be replicated into OPA
                   items:
                     properties:
                       group:
@@ -55,13 +54,11 @@ spec:
               description: Configuration for validation
               properties:
                 traces:
-                  description: List of requests to trace. Both "user" and "kinds"
-                    must be specified
+                  description: List of requests to trace. Both "user" and "kinds" must be specified
                   items:
                     properties:
                       dump:
-                        description: Also dump the state of OPA with the trace. Set
-                          to `All` to dump everything.
+                        description: Also dump the state of OPA with the trace. Set to `All` to dump everything.
                         type: string
                       kind:
                         description: Only trace requests of the following GroupVersionKind
@@ -300,9 +297,9 @@ spec:
         - --audit-interval={{ .Values.gatekeeper.args.auditIntervalSeconds }}
         - --port=8443
         - --logtostderr
+        - --exempt-namespace=kube-system
         - --constraint-violations-limit={{ .Values.gatekeeper.args.constraintViolationsLimit }}
         - --audit-from-cache=false
-        - --exempt-namespace=kube-system
         command:
         - /manager
         env:
@@ -315,7 +312,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        image: {{ .Values.gatekeeper.image.name }}:{{ .Values.gatekeeper.image.tag }}
+        image: '{{ .Values.gatekeeper.image.name }}:{{ .Values.gatekeeper.image.tag }}'
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
@@ -338,11 +335,11 @@ spec:
             port: 9090
         resources:
           limits:
-            cpu: {{ .Values.gatekeeper.resources.cpuLimit }}
-            memory: {{ .Values.gatekeeper.resources.memoryLimit }}
+            cpu: '{{ .Values.gatekeeper.resources.cpuLimit }}'
+            memory: '{{ .Values.gatekeeper.resources.memoryLimit }}'
           requests:
-            cpu: {{ .Values.gatekeeper.resources.cpuRequests }}
-            memory: {{ .Values.gatekeeper.resources.memoryRequests }}
+            cpu: '{{ .Values.gatekeeper.resources.cpuRequests }}'
+            memory: '{{ .Values.gatekeeper.resources.memoryRequests }}'
         securityContext:
           allowPrivilegeEscalation: false
           runAsGroup: 999
@@ -434,14 +431,14 @@ spec:
     openAPIV3Schema:
       properties:
         apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          description: 'APIVersion defines the versioned schema of this representation of an object. Servers
+            should convert recognized schemas to the latest internal value, and may reject unrecognized
+            values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
           type: string
         kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          description: 'Kind is a string value representing the REST resource this object represents.
+            Servers may infer this from the endpoint the client submits requests to. Cannot be updated.
+            In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
           type: string
         metadata:
           type: object
