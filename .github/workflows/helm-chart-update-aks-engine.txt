@@ -1,0 +1,74 @@
+name: Helm chart update check for AKS Engine
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'Kubernetes/helmcharts/azure-policy-addon-aks-engine/**'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'Kubernetes/helmcharts/azure-policy-addon-aks-engine/**'
+jobs:
+  test:
+    name: Test Helm chart update
+    runs-on: ubuntu-latest
+    env:
+      ClusterType: "aks-engine"
+
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - id: settings
+      shell: bash
+      env:
+        AZURE_CREDENTIALS: ${{ secrets.TEST_AZURE_CREDENTIALS }}
+      run: |
+        currentDateTime=`date +"%Y%m%d%H%M%S"`
+        
+        clientId=$(echo "$AZURE_CREDENTIALS" | jq .'clientId' -r)
+        clientSecret=$(echo "$AZURE_CREDENTIALS" | jq .'clientSecret' -r)
+        tenantId=$(echo "$AZURE_CREDENTIALS" | jq .'tenantId' -r)
+        subscriptionId=$(echo "$AZURE_CREDENTIALS" | jq .'subscriptionId' -r)
+        resourceGroupName=$(echo "testRG${currentDateTime}")
+        
+        if [ $ClusterType == "aks-engine" ]
+        then
+           clusterName=$(echo "${resourceGroupName}")
+        else
+           clusterName=$(echo "testCluster${currentDateTime}")
+        fi
+
+        echo "::set-output name=ClientId::${clientId}"
+        echo "::set-output name=ClientSecret::add-mask::${clientSecret}"
+        echo "::set-output name=TenantId::${tenantId}"
+        echo "::set-output name=SubscriptionId::${subscriptionId}"
+        echo "::set-output name=ResourceGroupName::${resourceGroupName}"
+        echo "::set-output name=ClusterName::${clusterName}"
+
+    - shell: bash
+      env:
+        TenantId: ${{ steps.settings.outputs.TenantId }}
+        SubscriptionId: ${{ steps.settings.outputs.SubscriptionId }}
+        ClusterName: ${{ steps.settings.outputs.ClusterName }}
+
+      run: |
+        echo "Test env variables"
+        echo "Next Sub ID is $SubscriptionId"
+        echo "Next ClusterType is $ClusterType"
+ 
+    - name: Logon to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.TEST_AZURE_CREDENTIALS }}
+
+    - name: Create AKS Engine cluster
+      uses: azure/CLI@v1
+      with: 
+        inlineScript: |
+          chmod +x $GITHUB_WORKSPACE/scripts/testScript.sh
+          $GITHUB_WORKSPACE/scripts/testScript.sh $ClusterType $SubscriptionId $ResourceGroupName $ClientId $ClientSecret
+      

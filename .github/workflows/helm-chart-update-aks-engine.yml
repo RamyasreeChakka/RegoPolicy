@@ -1,0 +1,51 @@
+name: Helm chart update check for AKS Engine
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'Kubernetes/helmcharts/azure-policy-addon-aks-engine/**'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'Kubernetes/helmcharts/azure-policy-addon-aks-engine/**'
+jobs:
+  test:
+    name: Test Helm chart update
+    runs-on: ubuntu-latest
+    env:
+      ClusterType: "aks-engine"    
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - id: settings
+      name: Initialize environment settings
+      shell: bash
+      env:
+        AZURE_CREDENTIALS: ${{ secrets.TEST_AZURE_CREDENTIALS }}
+      run: |
+        chmod +x $GITHUB_WORKSPACE/scripts/jobSettings.sh
+        $GITHUB_WORKSPACE/scripts/jobSettings.sh
+
+    - name: Logon to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.TEST_AZURE_CREDENTIALS }}
+
+    - id: createCluster
+      name: Create Kubernetes cluster
+      uses: azure/CLI@v1
+      with: 
+        inlineScript: |
+          chmod +x $GITHUB_WORKSPACE/scripts/createCluster.sh
+          $GITHUB_WORKSPACE/scripts/createCluster.sh $ClusterType $SubscriptionId $ResourceGroupName $ClusterName $ClientId $ClientSecret
+
+    - name: Verify kubeconfig
+      shell: bash
+      env:
+        KubeConfig: ${{ steps.createCluster.outputs.KubeConfig }}
+      run: |
+        echo "Verifying kube config: $KubeConfig"

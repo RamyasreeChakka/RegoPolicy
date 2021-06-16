@@ -1,13 +1,13 @@
-# Default values for azure policy add-on on AKS Engine, a self managed Kubernetes cluster on Azure.
+# Default values for azure policy add-on for AKS Engine, a self-managed Kubernetes cluster on Azure.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-## Microsoft Azure Policy Add-on on AKS Engine
+## Microsoft Azure Policy Add-on for AKS Engine
 azurepolicy:
   image:
     name: "mcr.microsoft.com/azure-policy/policy-kubernetes-addon-prod"
     tag: "prod_20200227.1"
-## Replace <your_resource_id> with the resource group ID the AKS Engine cluster is in. For example: /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/testRG
+## Resource ID for aks-engine is the ID of the resource group the AKS Engine cluster is in.
   env:
     resourceid: <your_resource_id>
 
@@ -15,7 +15,7 @@ azurepolicy:
 gatekeeper:
   image:
     name: "mcr.microsoft.com/oss/open-policy-agent/gatekeeper"
-    tag: "v3.1.0-beta.7"
+    tag: "v3.1.0-beta.8"
   args:
     auditIntervalSeconds: 60
     constraintViolationsLimit: 100
@@ -25,8 +25,8 @@ gatekeeper:
     cpuRequests: 100m
     memoryRequests: 256Mi
 
-## Alpine+Curl image for the helm hook to maintain deletion order
-alpinecurl:
+## Alpine image used in the helm hook
+alpine:
   image:
     name: "mcr.microsoft.com/azure-policy/alpine-curl"
-    tag: "prod_20200228.1"
+    tag: "prod_20200409.1"
